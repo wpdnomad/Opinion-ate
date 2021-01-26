@@ -1,4 +1,6 @@
 name: Test
+env:
+        ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
 on: [push]
 
 jobs:
@@ -13,8 +15,6 @@ jobs:
         run: yarn test --watchAll=false
       - name: E2E Tests
         uses: cypress-io/github-action@v1
-        env:
-        ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
         with:
           start: yarn start
           wait-on: 'http://localhost:3000'

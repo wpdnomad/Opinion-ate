@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import {combineReducers} from 'redux';
 import restaurants from './restaurants/reducers';
 

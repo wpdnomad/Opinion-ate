@@ -33,10 +33,17 @@ describe('RestaurantList', () => {
     expect(queryByText('Sushi Place')).not.toBeNull();
     expect(queryByText('Pizza Place')).not.toBeNull();
   });
+  describe('when loading succeeds', () => {
+    it('displays the loading indicator while loading', () => {
+      renderWithProps({loading: true});
+      const {queryByTestId} = context;
+      expect(queryByTestId('loading-indicator')).not.toBeNull();
+    });
 
-  it('displays the loading indicator while loading', () => {
-    renderWithProps({loading: true});
-    const {queryByTestId} = context;
-    expect(queryByTestId('loading-indicator')).not.toBeNull();
+    it('does not display the loading indicator while not loading', () => {
+      renderWithProps({loading: false});
+      const {queryByTestId} = context;
+      expect(queryByTestId('loading-indicator')).toBeNull();
+    });
   });
 });

@@ -12,10 +12,10 @@ import store from './store';
 import RestaurantScreen from './components/RestaurantScreen';
 
 const theme = createMuiTheme({
-    palette: {
-      primary: green,
-    },
-  });
+  palette: {
+    primary: green,
+  },
+});
 
 const App = () => (
   <Provider store={store}>

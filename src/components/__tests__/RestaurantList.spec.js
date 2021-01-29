@@ -10,15 +10,19 @@ describe('RestaurantList', () => {
   let loadRestaurants;
   let context;
 
-  beforeEach(() => {
+  const renderWithProps = () => {
     loadRestaurants = jest.fn().mockName('loadRestaurants');
 
     context = render(
       <RestaurantList
         loadRestaurants={loadRestaurants}
         restaurants={restaurants}
-      />,
+      />
     );
+  };
+
+  beforeEach(() => {
+    renderWithProps();
   });
 
   it('loads restaurants on first render', () => {

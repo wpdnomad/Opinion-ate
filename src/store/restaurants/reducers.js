@@ -4,6 +4,7 @@ import {
     START_LOADING,
     STORE_RESTAURANTS,
     RECORD_LOADING_ERROR,
+    ADD_RESTAURANT,
   } from './actions';
 
   const loading = (state = false, action) => {
@@ -16,11 +17,14 @@ import {
       default:
         return state;
   }
-  };const records = (state = [], action) => {
+  };
+  const records = (state = [], action) => {
   
   switch (action.type) {
     case STORE_RESTAURANTS:
       return action.records;
+    case ADD_RESTAURANT:
+      return [...state, action.record];
     default:
       return state;
   }

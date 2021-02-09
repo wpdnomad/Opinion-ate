@@ -57,6 +57,10 @@ describe('NewRestaurantForm', () => {
       return act(flushPromises);
     });
 
+    it('does not call createRestaurant', () => {
+      expect(createRestaurant).not.toHaveBeenCalled();
+    });
+
     it('displays a validation error', () => {
       const {queryByText} = context;
       expect(queryByText(requiredError)).not.toBeNull();

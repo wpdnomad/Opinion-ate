@@ -22,6 +22,10 @@ describe('NewRestaurantForm', () => {
       const {queryByText} = context;
       expect(queryByText(requiredError)).toBeNull();
     });
+    it('does not display a server error', () => {
+      const {queryByText} = context;
+      expect(queryByText(serverError)).toBeNull();
+    });
   });
   describe('when filled in', () => {
     beforeEach(async () => {

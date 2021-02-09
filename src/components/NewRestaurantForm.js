@@ -10,9 +10,12 @@ export const NewRestaurantForm = ({createRestaurant}) => {
   const [validationError, setValidationError] = useState(false);
   const handleSubmit = e => {
     e.preventDefault();
-    if (!name) {
+    if (name) {
+      setValidationError(false);
+    } else {
       setValidationError(true);
     }
+
     createRestaurant(name).then(() => {
       setName('');
     });

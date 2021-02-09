@@ -49,39 +49,42 @@ describe('NewRestaurantForm', () => {
   describe('when empty', () => {
     beforeEach(async () => {
       createRestaurant.mockResolvedValue();
-  
+
       const {getByPlaceholderText, getByTestId} = context;
       await userEvent.type(getByPlaceholderText('Add Restaurant'), '');
       userEvent.click(getByTestId('new-restaurant-submit-button'));
-  
+
       return act(flushPromises);
     });
-  
+
     it('displays a validation error', () => {
       const {queryByText} = context;
       expect(queryByText(requiredError)).not.toBeNull();
     });
   });
+
   describe('when correcting a validation error', () => {
     beforeEach(async () => {
       createRestaurant.mockResolvedValue();
-  
+
       const {getByPlaceholderText, getByTestId} = context;
-  
+
       await userEvent.type(getByPlaceholderText('Add Restaurant'), '');
       userEvent.click(getByTestId('new-restaurant-submit-button'));
-  
+      await act(flushPromises);
+
       await userEvent.type(
         getByPlaceholderText('Add Restaurant'),
-        restaurantName,
+        restaurantName
       );
       userEvent.click(getByTestId('new-restaurant-submit-button'));
-  
+
       return act(flushPromises);
     });
-  
+
     it('clears the validation error', () => {
       const {queryByText} = context;
       expect(queryByText(requiredError)).toBeNull();
     });
+  });
 });

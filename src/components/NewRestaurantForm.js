@@ -12,13 +12,12 @@ export const NewRestaurantForm = ({createRestaurant}) => {
     e.preventDefault();
     if (name) {
       setValidationError(false);
+      createRestaurant(name).then(() => {
+        setName('');
+      });
     } else {
       setValidationError(true);
     }
-
-    createRestaurant(name).then(() => {
-      setName('');
-    });
   };
   return (
     <form onSubmit={handleSubmit}>

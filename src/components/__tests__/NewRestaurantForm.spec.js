@@ -9,7 +9,6 @@ describe('NewRestaurantForm', () => {
   const requiredError = 'Name is required';
   const serverError = 'The restaurant could not be saved. Please try again.';
 
-
   let createRestaurant;
   let context;
 
@@ -52,9 +51,9 @@ describe('NewRestaurantForm', () => {
       expect(queryByText(requiredError)).toBeNull();
     });
     it('does not display a server error', () => {
-  const {queryByText} = context;
-  expect(queryByText(serverError)).toBeNull();
-});
+      const {queryByText} = context;
+      expect(queryByText(serverError)).toBeNull();
+    });
   });
   describe('when empty', () => {
     beforeEach(async () => {
@@ -105,26 +104,41 @@ describe('NewRestaurantForm', () => {
   describe('when the store action rejects', () => {
     beforeEach(async () => {
       createRestaurant.mockRejectedValue();
-  
+
       const {getByPlaceholderText, getByTestId} = context;
-  
+
       await userEvent.type(
         getByPlaceholderText('Add Restaurant'),
-        restaurantName,
+        restaurantName
       );
       userEvent.click(getByTestId('new-restaurant-submit-button'));
-  
+
       return act(flushPromises);
     });
-  
+
     it('displays a server error', () => {
       const {queryByText} = context;
       expect(queryByText(serverError)).not.toBeNull();
     });
   });
 
-  it('does not display a server error', () => {
-    const {queryByText} = context;
-    expect(queryByText(serverError)).toBeNull();
+  describe('when retrying after a server error', () => {
+    beforeEach(async () => {
+      createRestaurant.mockRejectedValueOnce().mockResolvedValueOnce();
+
+      const {getByPlaceholderText, getByTestId} = context;
+      await userEvent.type(
+        getByPlaceholderText('Add Restaurant'),
+        restaurantName
+      );
+      userEvent.click(getByTestId('new-restaurant-submit-button'));
+      userEvent.click(getByTestId('new-restaurant-submit-button'));
+      return act(flushPromises);
+    });
+
+    it('clears the server error', () => {
+      const {queryByText} = context;
+      expect(queryByText(serverError)).toBeNull();
+    });
   });
 });

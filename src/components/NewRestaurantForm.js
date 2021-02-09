@@ -12,15 +12,20 @@ export const NewRestaurantForm = ({createRestaurant}) => {
     e.preventDefault();
     if (name) {
       setValidationError(false);
-      createRestaurant(name).then(() => {
-        setName('');
-      });
+      createRestaurant(name)
+        .then(() => {
+          setName('');
+        })
+        .catch(() => {});
     } else {
       setValidationError(true);
     }
   };
   return (
     <form onSubmit={handleSubmit}>
+      <Alert severity="error">
+        The restaurant could not be saved. Please try again.
+      </Alert>
       {validationError && <Alert severity="error">Name is required</Alert>}
       <TextField
         value={name}

@@ -120,6 +120,12 @@ describe('NewRestaurantForm', () => {
       const {queryByText} = context;
       expect(queryByText(serverError)).not.toBeNull();
     });
+    it('does not clear the name', () => {
+      const {getByPlaceholderText} = context;
+      expect(getByPlaceholderText('Add Restaurant').value).toEqual(
+        restaurantName
+      );
+    });
   });
 
   describe('when retrying after a server error', () => {
@@ -131,6 +137,7 @@ describe('NewRestaurantForm', () => {
         getByPlaceholderText('Add Restaurant'),
         restaurantName
       );
+      //wait for the first web request to return and update the state, then send the second one.
       userEvent.click(getByTestId('new-restaurant-submit-button'));
       await act(flushPromises);
       userEvent.click(getByTestId('new-restaurant-submit-button'));

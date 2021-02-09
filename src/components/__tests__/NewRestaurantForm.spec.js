@@ -7,6 +7,8 @@ import flushPromises from 'flush-promises';
 describe('NewRestaurantForm', () => {
   const restaurantName = 'Sushi Place';
   const requiredError = 'Name is required';
+  const serverError = 'The restaurant could not be saved. Please try again.';
+
 
   let createRestaurant;
   let context;
@@ -89,6 +91,27 @@ describe('NewRestaurantForm', () => {
     it('clears the validation error', () => {
       const {queryByText} = context;
       expect(queryByText(requiredError)).toBeNull();
+    });
+  });
+
+  describe('when the store action rejects', () => {
+    beforeEach(async () => {
+      createRestaurant.mockRejectedValue();
+  
+      const {getByPlaceholderText, getByTestId} = context;
+  
+      await userEvent.type(
+        getByPlaceholderText('Add Restaurant'),
+        restaurantName,
+      );
+      userEvent.click(getByTestId('new-restaurant-submit-button'));
+  
+      return act(flushPromises);
+    });
+  
+    it('displays a server error', () => {
+      const {queryByText} = context;
+      expect(queryByText(serverError)).not.toBeNull();
     });
   });
 });

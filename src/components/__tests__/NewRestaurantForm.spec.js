@@ -132,6 +132,7 @@ describe('NewRestaurantForm', () => {
         restaurantName
       );
       userEvent.click(getByTestId('new-restaurant-submit-button'));
+      await act(flushPromises);
       userEvent.click(getByTestId('new-restaurant-submit-button'));
       return act(flushPromises);
     });

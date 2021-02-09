@@ -1,6 +1,8 @@
 import React, {useState} from 'react';
+import {connect} from 'react-redux';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import {createRestaurant} from '../store/restaurants/actions';
 
 export const NewRestaurantForm = ({createRestaurant}) => {
   const [name, setName] = useState('');
@@ -10,6 +12,14 @@ export const NewRestaurantForm = ({createRestaurant}) => {
   };
   return (
     <form onSubmit={handleSubmit}>
+      
+      <TextField
+        value={name}
+        onChange={e => setName(e.target.value)}
+        placeholder="Add Restaurant"
+        fullWidth
+        variant="filled"
+      />
       <Button
         type="submit"
         variant="contained"
@@ -18,15 +28,11 @@ export const NewRestaurantForm = ({createRestaurant}) => {
       >
         Add
       </Button>
-      <TextField
-        value={name}
-        onChange={e => setName(e.target.value)}
-        placeholder="Add Restaurant"
-        fullWidth
-        variant="filled"
-      />
     </form>
   );
 };
 
-export default NewRestaurantForm;
+const mapStateToProps = null;
+const mapDispatchToProps = {createRestaurant};
+
+export default connect(mapStateToProps, mapDispatchToProps)(NewRestaurantForm);

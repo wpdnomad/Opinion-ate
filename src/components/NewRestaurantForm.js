@@ -8,11 +8,12 @@ export const NewRestaurantForm = ({createRestaurant}) => {
   const [name, setName] = useState('');
   const handleSubmit = e => {
     e.preventDefault();
-    createRestaurant(name);
+    createRestaurant(name).then(() => {
+      setName('');
+    });
   };
   return (
     <form onSubmit={handleSubmit}>
-      
       <TextField
         value={name}
         onChange={e => setName(e.target.value)}
